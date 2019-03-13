@@ -1,0 +1,21 @@
+{
+  "name": "web-login-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A basic Node.js web site with an authenticated section.  This is for testing web app security scanner logins.",
+  "dependencies": {
+    "request": "*",
+    "express-handlebars": "*",
+    "body-parser": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "cookie-parser": "*",
+    "express-session": "*",
+    "connect-mongo": "*",
+    "connect": "*",
+    "mongoose": "*",
+    "q": "*",
+    "express": "*"
+  }
+}
+

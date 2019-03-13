@@ -1,0 +1,18 @@
+
+<h2>Login form</h2>
+<form action="/login" method="post">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
+<p>
+                        <input type="text" name="username" tabindex="1" data-name="username" placeholder="Username" maxlength="128" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" class="required login-username">
+</p>
+<p>
+                        <input type="password" name="password" tabindex="2" data-name="password" placeholder="Password" maxlength="128" autocomplete="off" class="required login-password" data-domselect="login-password">
+</p>
+
+<p>
+                    <input type="submit" value="Sign In"/>
+</p>
+</form>
+
+
+
