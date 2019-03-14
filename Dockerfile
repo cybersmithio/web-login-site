@@ -2,6 +2,13 @@
 ### https://github.com/nodejs/docker-node/blob/master/10/jessie/Dockerfile
 FROM buildpack-deps:stretch
 
+### This update section comes from docker-library/buildpacks-dep
+### https://github.com/docker-library/buildpack-deps/blob/d7da72aaf3bb93fecf5fcb7c6ff154cb0c55d1d1/jessie/Dockerfile
+RUN set -ex; \
+	apt-get update; \
+	apt-get -y upgrade; \
+	rm -rf /var/lib/apt/lists/*
+
 RUN groupadd --gid 1000 node \
   && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
 
@@ -62,6 +69,8 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+
+
 
 COPY html /usr/src/app
 
