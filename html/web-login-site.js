@@ -114,6 +114,7 @@ debugLog("Setting up main routes")
 
 //Declare home page route
 app.get('/',publicNotLoggedIn,function(req,res) {
+    var cookies = new Cookies(req, res, { keys: keys })
 	//Start the initialization of all the cache data
 
 	console.log('Cookies: ', req.cookies)
