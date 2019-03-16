@@ -115,6 +115,9 @@ debugLog("Setting up main routes")
 //Declare home page route
 app.get('/',publicNotLoggedIn,function(req,res) {
 	//Start the initialization of all the cache data
+	debugLog("Cookies",req.cookies)
+	debugLog("Signed Cookies",req.signedCookies)
+	cookies.set('LastVisit', new Date().toISOString(), { signed: true })
     res.render('home');
 });
 
