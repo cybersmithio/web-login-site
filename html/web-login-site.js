@@ -1,5 +1,6 @@
 var express=require('express');
 var app=express();
+var Cookies = require('cookies')
 
 //So we can read configuration files, load the file module
 var fs=require('fs');
