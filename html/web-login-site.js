@@ -118,7 +118,7 @@ app.get('/',publicNotLoggedIn,function(req,res) {
 
 	console.log('Cookies: ', req.cookies)
 	console.log('Signed Cookies: ', req.signedCookies)
-	cookies.set('LastVisit', new Date().toISOString(), { signed: true })
+	//cookies.set('LastVisit', new Date().toISOString(), { signed: true })
     res.render('home');
 });
 
