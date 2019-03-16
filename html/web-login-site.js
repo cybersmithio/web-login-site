@@ -125,6 +125,8 @@ app.get('/',publicNotLoggedIn,function(req,res) {
 //Declare home page route
 app.get('/userarea',userLoggedIn,function(req,res) {
 	//Start the initialization of all the cache data
+	console.log('Cookies: ', req.cookies)
+	console.log('Signed Cookies: ', req.signedCookies)
 
     res.render('userarea');
 });
