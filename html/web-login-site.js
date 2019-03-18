@@ -78,10 +78,10 @@ app.get('/login',function(req,res){
 
 function logInfo(req,res) {
     console.log('Headers',JSON.stringify(req.headers))
-
     console.log('Parsed cookies')
 	console.log('Cookies: ', req.cookies)
 	console.log('Signed Cookies: ', req.signedCookies)
+	console.log('\n\n')
 
 }
 
