@@ -77,9 +77,7 @@ app.get('/login',function(req,res){
 
 
 function logInfo(req,res) {
-    console.log('Headers')
-	console.log('Cookie: ',req.getHeader('cookie'))
-	console.log('User-agent:',req.getHeader('user-agent'))
+    console.log('Headers',JSON.stringify(req.headers))
 
     console.log('Parsed cookies')
 	console.log('Cookies: ', req.cookies)
