@@ -75,13 +75,28 @@ app.get('/login',function(req,res){
     res.status(200).render('login');
 });
 
+
+function logInfo(req,res) {
+    console.log('Headers')
+	console.log('Cookie: ',req.getHeader('cookie'))
+	console.log('User-agent:',req.getHeader('user-agent'))
+
+    console.log('Parsed cookies')
+	console.log('Cookies: ', req.cookies)
+	console.log('Signed Cookies: ', req.signedCookies)
+
+}
+
 //Log out the user and put them back to the login page
 app.get('/logout',function(req,res){
+    logInfo(req,res)
     req.logout();
     res.redirect('/');
 });
 
 app.get('/unauthorized',function(req,res){
+    logInfo(req,res)
+
     res.status(403).render('unauthorized');
 });
 
@@ -118,8 +133,7 @@ app.get('/',publicNotLoggedIn,function(req,res) {
     var cookies = new Cookies(req, res)
 	//Start the initialization of all the cache data
 
-	console.log('Cookies: ', req.cookies)
-	console.log('Signed Cookies: ', req.signedCookies)
+    logInfo(req,res)
 	cookies.set("James","Test value")
 	//cookies.set('LastVisit', new Date().toISOString(), { signed: true })
     res.render('home');
@@ -128,9 +142,7 @@ app.get('/',publicNotLoggedIn,function(req,res) {
 //Declare home page route
 app.get('/userarea',userLoggedIn,function(req,res) {
 	//Start the initialization of all the cache data
-	console.log('Cookies: ', req.cookies)
-	console.log('Signed Cookies: ', req.signedCookies)
-
+    logInfo(req,res)
     res.render('userarea');
 });
 
