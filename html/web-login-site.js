@@ -77,10 +77,12 @@ app.get('/login',function(req,res){
 
 
 function logInfo(req,res) {
+    console.log('Requested page:',req.url)
     console.log('Headers',JSON.stringify(req.headers))
     console.log('Parsed cookies')
 	console.log('Cookies: ', req.cookies)
 	console.log('Signed Cookies: ', req.signedCookies)
+
 	console.log('\n\n')
 
 }
@@ -146,8 +148,10 @@ app.get('/userarea',userLoggedIn,function(req,res) {
 
 
 
+
 //Error handling
 app.use(function(req,res,next) {
+  logInfo(req,res)
   res.status(404);
   res.render('404');
 });
