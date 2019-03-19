@@ -153,8 +153,8 @@ app.get('/uniquesig51a7b40fe568f32d40f5cb9a34ea4b4e/uniquesig0/InternalSite/Init
     logInfo(req,res)
 
     //Test if we respond with anything other than a 3xx, will it start with the cookies?
-    res.render('home');
-    //res.redirect(302,'/uniquesig51a7b40fe568f32d40f5cb9a34ea4b4e/uniquesig0/InternalSite/Login.asp?resource_id=329672D807B8417B990E00D284CAB21F&login_type=2&site_name=oakvilleportals&secure=1&URLHASH=0468ed40-55a0-4af4-b019-3039103a7a68&orig_url=https://portico.oakville.ca');
+    //res.render('home');
+    res.redirect(302,'/uniquesig51a7b40fe568f32d40f5cb9a34ea4b4e/uniquesig0/InternalSite/Login.asp?resource_id=329672D807B8417B990E00D284CAB21F&login_type=2&site_name=oakvilleportals&secure=1&URLHASH=0468ed40-55a0-4af4-b019-3039103a7a68&orig_url=https://portico.oakville.ca');
 });
 
 
