@@ -135,8 +135,12 @@ app.get('/',publicNotLoggedIn,function(req,res) {
 
     logInfo(req,res)
 	cookies.set("James","Test value")
+
+	//Testing
+    res.redirect(302,'/uniquesig51a7b40fe568f32d40f5cb9a34ea4b4e/uniquesig0/InternalSite/InitParams.aspx?referrer=/InternalSite/Login.asp&resource%5Fid=329672D807B8417B990E00D284CAB21F&login%5Ftype=2&site%5Fname=oakvilleportals&secure=1&URLHASH=0468ed40%2D55a0%2D4af4%2Db019%2D3039103a7a68&orig%5Furl=https%3A%2F%2Fportico%2Eoakville%2Eca%2F');
+
 	//cookies.set('LastVisit', new Date().toISOString(), { signed: true })
-    res.render('home');
+    //res.render('home');
 });
 
 
