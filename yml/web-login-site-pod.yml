@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-login-site.example.com
+  labels:
+    app: web-login-site
+spec:			⇐ Pod specification
+  containers:				⇐ Can have multiple containers
+    - name: web-login-site-1
+      image: repository/image
+      ports:
+      - name: web-login-site-port		⇐ referenced later on
+        - containerPort: 3000
