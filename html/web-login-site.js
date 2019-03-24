@@ -136,8 +136,6 @@ app.get('/',publicNotLoggedIn,function(req,res) {
     logInfo(req,res)
 	cookies.set("James","Test value")
 
-
-	//cookies.set('LastVisit', new Date().toISOString(), { signed: true })
     res.render('home');
 });
 
