@@ -71,7 +71,7 @@ RUN set -ex \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
 
-### Make sure we got everything
+### It seems like we need one more update at the end of everything.
 RUN set -ex; \
 	apt-get update; \
 	apt-get -y upgrade; \
