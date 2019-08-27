@@ -19,8 +19,10 @@ before_install:
 script:
 - echo Test
 - echo Home $HOME
+- set
 - echo $TENABLE_IO_CONTAINER_SECURITY_EMAIL
 - echo $TENABLE_IO_CONTAINER_SECURITY_PASSWORD
+- exit 1
 
 after_success:
 - docker login -u $TENABLE_IO_CONTAINER_SECURITY_EMAIL -p $TENABLE_IO_CONTAINER_SECURITY_PASSWORD registry.cloud.tenable.com
