@@ -8,8 +8,7 @@ before_install:
 - docker build -t web-login-site/web-login-site .
 - docker run -dt -p 127.0.0.1:443:443 web-login-site/web-login-site
 - docker ps -a
-
-- docker run web-login-site/web-login-site /bin/sh -c "cd /root/sinatra; bundle exec rake test"
+- docker run web-login-site/web-login-site /bin/sh -c "npm test"
 
 after_success:
 - docker login -u $TENABLE_IO_ACCESS_KEY -p $TENABLE_IO_SECRET_KEY registry.cloud.tenable.com
