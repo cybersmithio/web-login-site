@@ -23,7 +23,7 @@ script:
 - echo
 
 after_success:
-- docker login -u $TENABLE_IO_CONTAINER_SECURITY_EMAIL -p $TTENABLE_IO_CONTAINER_SECURITY_PASSWORD registry.cloud.tenable.com
+- docker login -u $TENABLE_IO_CONTAINER_SECURITY_EMAIL -p $TENABLE_IO_CONTAINER_SECURITY_PASSWORD registry.cloud.tenable.com
 - export REPO=web-login-site/web-login-site
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 - docker build -f Dockerfile -t $REPO:$COMMIT .
