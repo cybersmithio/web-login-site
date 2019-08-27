@@ -10,6 +10,7 @@
     "passport": "*",
     "passport-local": "*",
     "cookie-parser": "*",
+    "cookies": "*",
     "express-session": "*",
     "connect-mongo": "*",
     "connect": "*",

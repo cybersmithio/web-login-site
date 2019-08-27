@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-login-site-service
+spec:
+  ports:
+  - port: 443
+    nodePort: 31001
+    targetPort: webloginport
+    protocol: TCP
+  selector:
+    app: web-login-site
+  type: NodePort

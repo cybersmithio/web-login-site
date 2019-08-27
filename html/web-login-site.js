@@ -1,5 +1,6 @@
 var express=require('express');
 var app=express();
+var Cookies = require('cookies')
 
 //So we can read configuration files, load the file module
 var fs=require('fs');
@@ -74,13 +75,28 @@ app.get('/login',function(req,res){
     res.status(200).render('login');
 });
 
+
+function logInfo(req,res) {
+    console.log('Requested page:',req.url)
+    console.log('Headers',JSON.stringify(req.headers))
+    console.log('Parsed cookies')
+	console.log('Cookies: ', req.cookies)
+	console.log('Signed Cookies: ', req.signedCookies)
+
+	console.log('\n\n')
+
+}
+
 //Log out the user and put them back to the login page
 app.get('/logout',function(req,res){
+    logInfo(req,res)
     req.logout();
     res.redirect('/');
 });
 
 app.get('/unauthorized',function(req,res){
+    logInfo(req,res)
+
     res.status(403).render('unauthorized');
 });
 
@@ -114,21 +130,30 @@ debugLog("Setting up main routes")
 
 //Declare home page route
 app.get('/',publicNotLoggedIn,function(req,res) {
+    var cookies = new Cookies(req, res)
 	//Start the initialization of all the cache data
+
+    logInfo(req,res)
+	cookies.set("James","Test value")
+
     res.render('home');
 });
+
+
 
 //Declare home page route
 app.get('/userarea',userLoggedIn,function(req,res) {
 	//Start the initialization of all the cache data
-
+    logInfo(req,res)
     res.render('userarea');
 });
 
 
 
+
 //Error handling
 app.use(function(req,res,next) {
+  logInfo(req,res)
   res.status(404);
   res.render('404');
 });
