@@ -17,7 +17,18 @@
     "mongoose": "*",
     "q": "*",
     "express": "*"
-  }
-  "test": "mocha --reporter list"
+  },
+  "test": "mocha --reporter list",
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "main": "web-login-site.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "exit 0"
+  },
+  "author": "",
+  "license": "ISC"
 }
-
