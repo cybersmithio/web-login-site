@@ -17,7 +17,9 @@ before_install:
 - docker run web-login-site/web-login-site /bin/sh -c "npm test"
 
 script:
-- /bin/sh -c "echo My variables: $TENABLE_IO_CONTAINER_SECURITY_EMAIL $TENABLE_IO_CONTAINER_SECURITY_PASSWORD"
+- echo Test
+- echo $TENABLE_IO_CONTAINER_SECURITY_EMAIL
+- echo $TENABLE_IO_CONTAINER_SECURITY_PASSWORD"
 
 after_success:
 - docker login -u $TENABLE_IO_CONTAINER_SECURITY_EMAIL -p $TENABLE_IO_CONTAINER_SECURITY_PASSWORD registry.cloud.tenable.com
