@@ -21,6 +21,9 @@ after_success:
   registry.cloud.tenable.com
 - export REPO=web-login-site/web-login-site
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+- echo $REPO
+- echo $TAG
+- echo $COMMIT
 - docker build -f Dockerfile -t $REPO:$COMMIT .
 - docker tag $REPO:$COMMIT $REPO:$TAG
 - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
