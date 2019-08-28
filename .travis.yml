@@ -20,12 +20,12 @@ script:
 after_success:
 - docker login -u $TENABLE_IO_CONTAINER_SECURITY_EMAIL -p $TENABLE_IO_CONTAINER_SECURITY_PASSWORD
   registry.cloud.tenable.com
-- export REPO=web-login-site/web-login-site
+- export IMAGE=web-login-site
+- export REPO=web-login-site
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-- docker build -f Dockerfile -t $REPO:$COMMIT .
-- docker tag $REPO:$COMMIT registry.cloud.tenable.com/$REPO:$TAG
-- docker tag $REPO:$COMMIT registry.cloud.tenable.com/$REPO:travis-$TRAVIS_BUILD_NUMBER
-- docker push registry.cloud.tenable.com/$REPO:travis-$TRAVIS_BUILD_NUMBER
-- docker push registry.cloud.tenable.com/$REPO:$TAG
-- ls
-- sh -c ./tiocs-check.sh
+- docker build -f Dockerfile -t $REPO/$IMAGE:$COMMIT .
+- docker tag $REPO/$IMAGE:$COMMIT registry.cloud.tenable.com/$REPO/$IMAGE:$TAG
+- docker tag $REPO/$IMAGE:$COMMIT registry.cloud.tenable.com/$REPO/$IMAGE:travis-$TRAVIS_BUILD_NUMBER
+- docker push registry.cloud.tenable.com/$REPO/$IMAGE:travis-$TRAVIS_BUILD_NUMBER
+- docker push registry.cloud.tenable.com/$REPO/$IMAGE:$TAG
+- cat ./tiocs-check.sh | sh -s
