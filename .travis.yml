@@ -27,4 +27,5 @@ after_success:
 - docker tag $REPO:$COMMIT registry.cloud.tenable.com/$REPO:travis-$TRAVIS_BUILD_NUMBER
 - docker push registry.cloud.tenable.com/$REPO:travis-$TRAVIS_BUILD_NUMBER
 - docker push registry.cloud.tenable.com/$REPO:$TAG
-- tiocs-check.sh
+- ls
+- ./tiocs-check.sh
