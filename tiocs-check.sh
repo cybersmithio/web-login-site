@@ -11,6 +11,5 @@ while [ 1 -eq 1 ]; do
   if [ "x$RESP" = "xfail" ] ; then
     exit 1
   fi
-  echo "Report not ready yet, waiting 30 seconds before checking again."
   sleep 30
 done
