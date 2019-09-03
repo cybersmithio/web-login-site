@@ -6,10 +6,12 @@ env:
   - secure: ep2IXNTGdq99vc3fxnKyTIkOdeFZRxUNNVNenlUt1LTg48GO0HuUlBULc2kigBP8nN8N/1ZO7Qh+5AXtk3FSDCY6XsXQnViYmoLQ8ZArBRg2cOcL6luFrmvMKGT2KdKUGT310Qqt9FNyFMO4XB53DQUUo+GQo3f2AhtpFTSEOfY0wkUbH7VQnJI9FwVGv9X0EMSm/e+kYnv/TjsuLNuHbukOpgi3b0ApwhXhFqD4uNl2PEhD7b9NZuCIi0X0DHWlBwC+KrsdKe7HZyLaR2E5FItWTQIsUW39o33mQeEyhn8KCNWylZ1yKgW97d8TanQoLhX/8xKsUdkWzp4ruUMtFUHCWRa88ursv0/zFcj0nI2bqfYR5wF4UnmTm2sJQdg+1DHGG6zGljMTv8iw2pj+auGkcEdECFsFHHcrvaC9K9IbAXIPJVqA8Ab4DjcxoaNz6yFBkMzmFmuGNsriCTRj+/s+H/WouaEvAcidOGCLT5wyvmjXhMqLJ5V/R00ChUDhWxaQZt+epTRcP4/llR7QmxBob0/uOBafxmiQJ5Ug/asOBIpJNNyJCzVVR9blV9SIqg6/IAC8CdYk4Jg7xFyFrP0FK4BkBnTX5fzlKR29DngqTaXD6JdzNWEEXXvmSJrUL0O1PRnaXA+ZtPw4a/t1QQpLAutka2IxPa1mvtx7utU=
   - secure: OstO/kzErIvmlo/zVgUaQEdfvQQBAEGsT6nwn/DlTq2wjzgos1JYlCLUAO4CuxGH+uetx27a4VZvjjWMbhUjv2d5zeKj58+iaHniq5tk8HtDQsHr9GKDerxe2kSexuy4qmDxpPn4TZycaXj90WDA7hNY25kijxqw5tWAIbd+qAN6rnPOsqjquoUeizbTGkdkmXeJXOxnZDtBQ7c59s7T5GGBt9uUsj0JKCn1zeKv5Sy9x/ohAolGRjW3cPwOt2EL+aYDUOWxueQUdki7X/Vkduni07dzAEWlmh/mYYtgT/xMXcVvZc0IliOOyj/7IgJLzgtFw2WdjB3MnIqpQyYiyoCgXS2M3oqlVGHDifFfewbDuR9wO8YKu2CikPYxLtrxktONGnF4UqHrFxAnMKtk8tAVVRe2V5QC0qdPWPwkEpyjSyR36sRIEpAcKLUVDWcSQyQdiKNSrU8BegNbAtuOfKYLoa1W2xCMZYRNKrAUNyYYCoSn/9VFQxVgxLN1P0N7Kk/7NmGOV1ghg7P5zk5BX2iww2xROt3cqEaXf6MYkOXSyHAueDKdGnhChLNXMxBz1Z0qQmR/PCjRLKgeZaulvhjEl8AVoW7CEp9C9Ne93ZWG8D+vDmqXyb4yB6NEBw7V0mdBYn+Urwl3YJ/7jb5finX0zQjN648HjGPVArC6MSw=
   - COMMIT=${TRAVIS_COMMIT::8}
+  - IMAGE=web-login-site
+  - REPO=web-login-site
 services:
 - docker
 before_install:
-- docker build -t web-login-site/web-login-site .
+- docker build -t $IMAGE .
 - docker run -dt -p 127.0.0.1:443:443 web-login-site/web-login-site
 - docker ps -a
 - docker run web-login-site/web-login-site /bin/sh -c "npm test"
@@ -21,9 +23,7 @@ after_success:
 - docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 - docker login -u $TENABLE_IO_ACCESS_KEY -p $TENABLE_IO_SECRET_KEY
   registry.cloud.tenable.com
-- export IMAGE=web-login-site
-- export REPO=web-login-site
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - docker build -f Dockerfile -t $REPO/$IMAGE:$COMMIT .
-- docker save $REPO/$IMAGE:$COMMIT | docker run -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
+- docker save $IMAGE | docker run -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
 - cat ./tiocs-check.sh | sh -s
