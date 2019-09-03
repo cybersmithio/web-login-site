@@ -12,9 +12,9 @@ services:
 - docker
 before_install:
 - docker build -t $IMAGE .
-- docker run -dt -p 127.0.0.1:443:443 web-login-site/web-login-site
+- docker run -dt -p 127.0.0.1:443:443 $IMAGE
 - docker ps -a
-- docker run web-login-site/web-login-site /bin/sh -c "npm test"
+- docker run $IMAGE /bin/sh -c "npm test"
 script:
 - echo "Tests succeed!"
 
@@ -24,6 +24,6 @@ after_success:
 - docker login -u $TENABLE_IO_ACCESS_KEY -p $TENABLE_IO_SECRET_KEY
   registry.cloud.tenable.com
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-- docker build -f Dockerfile -t $REPO/$IMAGE:$COMMIT .
+- docker build -f Dockerfile -t $IMAGE:$COMMIT .
 - docker save $IMAGE | docker run -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
 - cat ./tiocs-check.sh | sh -s
