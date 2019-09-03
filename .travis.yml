@@ -25,5 +25,5 @@ after_success:
   registry.cloud.tenable.com
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 - docker build -f Dockerfile -t $IMAGE:$COMMIT .
-- docker save $IMAGE | docker run -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
+- docker save $IMAGE | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$REPO -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE:travis-$TRAVIS_BUILD_NUMBER
 - cat ./tiocs-check.sh | sh -s
