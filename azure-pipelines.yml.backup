@@ -41,3 +41,4 @@ stages:
       displayName: Assessing image for vulnerabilities
       inputs:
        scriptPath: tiocs-azure-on-prem-scanner.sh
+
