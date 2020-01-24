@@ -3,11 +3,11 @@
 # BUILD_BUILDID - This is set by Azure if you have called this script from a Docker Build and Push step
 # CONTAINERREGISTRY - This is set by Azure if you have called this script from a Docker Build and Push step
 # IMAGEREPOSITORY - This is set by Azure if you have called this script from a Docker Build and Push step
-# TENABLEACCESSKEY - Should come from the Azure Key Vault
-# TENABLESECRETKEY - Should come from the Azure Key Vault
-# TENABLEJFROGPASSWORD - Should come from the Azure Key Vault
+# TenableIOAccessKey - Should come from the Azure Key Vault
+# TenableIOSecretKey - Should come from the Azure Key Vault
+# TenableIOJFrog - Should come from the Azure Key Vault
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
-echo "Tenable.io Access Key: $TENABLEACCESSKEY"
+echo "Tenable.io Access Key: $TenableIOAccessKey"
 echo ""
 echo "Variables list:"
 set
@@ -19,19 +19,19 @@ set
 
 echo "Download Tenable.io on-prem scanner"
 
-docker login --username pubread --password $TENABLEJFROGPASSWORD tenableio-docker-consec-local.jfrog.io
+docker login --username pubread --password $TenableIOJFrog tenableio-docker-consec-local.jfrog.io
 docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
 echo "Start of on-prem analysis"
 set -x
-docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TENABLEACCESSKEY -e TENABLE_SECRET_KEY=$TENABLESECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 set +x
 echo "End of on-prem analysis"
 
 echo "Download report on image"
 while [ 1 -eq 1 ]; do
   RESP=`curl -s --request GET --url "https://cloud.tenable.com/container-security/api/v1/compliancebyname?image=$IMAGEREPOSITORY&repo=$IMAGEREPOSITORY&tag=$BUILD_BUILDID" \
-  --header 'accept: application/json' --header "x-apikeys: accessKey=$TENABLEACCESSKEY;secretKey=$TENABLESECRETKEY" \
+  --header 'accept: application/json' --header "x-apikeys: accessKey=$TenableIOAccessKey;secretKey=$TenableIOSecretKey" \
   | sed -n 's/.*\"status\":\"\([^\"]*\)\".*/\1/p'`
   echo "Report status: $RESP"
   if [ "x$RESP" = "xpass" ] ; then
