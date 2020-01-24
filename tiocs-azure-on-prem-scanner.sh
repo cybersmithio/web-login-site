@@ -25,6 +25,9 @@ docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 echo "Start of on-prem analysis"
 set -x
 docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+if [ $? != 0 ]; then
+  echo "Error analyzing container image"
+fi
 set +x
 echo "End of on-prem analysis"
 
