@@ -1,4 +1,9 @@
 # Docker
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'Pay-As-You-Go(5e03a5ca-9d84-43b4-9205-2fcef2a45b58)'
+    KeyVaultName: 'tenable-key-vault'
+    SecretsFilter: '*'
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
