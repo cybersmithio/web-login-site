@@ -45,4 +45,4 @@ stages:
     - task: ShellScript@2
       displayName: Assessing image for vulnerabilities
       inputs:
-       scriptPath: tiocs-azure-on-prem-scanner.sh
+       scriptPath: tiocs-azure-on-prem-scanner.sh $(TenableIOAccessKey) $(TenableIOSecretKey) $(TenableIOJFrog)
