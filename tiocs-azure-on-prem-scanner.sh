@@ -6,6 +6,10 @@
 # TenableIOAccessKey - Should come from the Azure Key Vault
 # TenableIOSecretKey - Should come from the Azure Key Vault
 # TenableIOJFrog - Should come from the Azure Key Vault
+TenableIOAccessKey=$1
+TenableIOSecretKey=$2
+TenableIOJFrog=$3
+
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
 echo "Tenable.io Access Key: $TenableIOAccessKey"
 echo ""
@@ -27,6 +31,7 @@ set -x
 docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 if [ $? != 0 ]; then
   echo "Error analyzing container image"
+  exit 1
 fi
 set +x
 echo "End of on-prem analysis"
