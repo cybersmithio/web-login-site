@@ -32,9 +32,13 @@ stages:
         azureSubscription: 'Pay-As-You-Go(5e03a5ca-9d84-43b4-9205-2fcef2a45b58)'
         KeyVaultName: 'TenableCSDemoKeyVault'
         SecretsFilter: '*'
-    - task: AzureCLI@2
+    - task: ShellScript@2
+      displayName: Assessing image for vulnerabilities
       inputs:
-        scriptType: 'bash'
-        scriptLocation: 'scriptPath'
-        scriptPath: 'tiocs-azure-on-prem-scanner.sh'
-        arguments: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
+       scriptPath: tiocs-azure-on-prem-scanner.sh
+       args: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'TenableCSDemoACR'
+        repository: 'webloginsite'
+        command: 'push'
