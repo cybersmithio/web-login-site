@@ -24,6 +24,7 @@ stages:
       displayName: Build an image
       inputs:
         command: build
+        repository: 'webloginsite'
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
@@ -32,3 +33,8 @@ stages:
         azureSubscription: 'Pay-As-You-Go(5e03a5ca-9d84-43b4-9205-2fcef2a45b58)'
         KeyVaultName: 'TenableCSDemoKeyVault'
         SecretsFilter: '*'
+    - task: ShellScript@2
+      displayName: Assessing image for vulnerabilities
+      inputs:
+       scriptPath: tiocs-azure-on-prem-scanner.sh
+       args: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
