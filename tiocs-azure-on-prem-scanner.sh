@@ -10,21 +10,22 @@ TIOSECRETKEY=$2
 TIOJFROGPASS=$3
 
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
-echo "Tenable.io Access Key: $TenableIOAccessKey"
+echo "Tenable.io Access Key: $TIOACCESSKEY"
 echo ""
 echo "Variables list:"
 set
 
 echo "Download Tenable.io on-prem scanner"
 
-docker login --username pubread --password $TenableIOJFrog tenableio-docker-consec-local.jfrog.io
+docker login --username pubread --password $TIOJFROGPASS tenableio-docker-consec-local.jfrog.io
 docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
+
 
 docker images
 
 echo "Start of on-prem analysis"
 set -x
-docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 if [ $? != 0 ]; then
   echo "Error analyzing container image"
   exit 1
@@ -35,7 +36,7 @@ echo "End of on-prem analysis"
 echo "Download report on image"
 while [ 1 -eq 1 ]; do
   RESP=`curl -s --request GET --url "https://cloud.tenable.com/container-security/api/v1/compliancebyname?image=$IMAGEREPOSITORY&repo=$IMAGEREPOSITORY&tag=$BUILD_BUILDID" \
-  --header 'accept: application/json' --header "x-apikeys: accessKey=$TenableIOAccessKey;secretKey=$TenableIOSecretKey" \
+  --header 'accept: application/json' --header "x-apikeys: accessKey=$TIOACCESSKEY;secretKey=$TIOSECRETKEY" \
   | sed -n 's/.*\"status\":\"\([^\"]*\)\".*/\1/p'`
   echo "Report status: $RESP"
   if [ "x$RESP" = "xpass" ] ; then
