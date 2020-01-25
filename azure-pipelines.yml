@@ -37,8 +37,4 @@ stages:
       inputs:
        scriptPath: tiocs-azure-on-prem-scanner.sh
        args: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'TenableCSDemoACR'
-        repository: 'webloginsite'
-        command: 'push'
+    
