@@ -20,6 +20,8 @@ echo "Download Tenable.io on-prem scanner"
 docker login --username pubread --password $TenableIOJFrog tenableio-docker-consec-local.jfrog.io
 docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
+docker images
+
 echo "Start of on-prem analysis"
 set -x
 docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
