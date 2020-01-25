@@ -1,7 +1,6 @@
 #!/bin/sh
 #This script expects the following environment variables to be set:
 # BUILD_BUILDID - This is set by Azure if you have called this script from a Docker Build and Push step
-# CONTAINERREGISTRY - This is set by Azure if you have called this script from a Docker Build and Push step
 # IMAGEREPOSITORY - This is set by Azure if you have called this script from a Docker Build and Push step
 # TenableIOAccessKey - Should come from the Azure Key Vault
 # TenableIOSecretKey - Should come from the Azure Key Vault
@@ -23,7 +22,7 @@ docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
 echo "Start of on-prem analysis"
 set -x
-docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TenableIOAccessKey -e TENABLE_SECRET_KEY=$TenableIOSecretKey -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 if [ $? != 0 ]; then
   echo "Error analyzing container image"
   exit 1
