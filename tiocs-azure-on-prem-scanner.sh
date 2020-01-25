@@ -5,9 +5,9 @@
 # TenableIOAccessKey - Should come from the Azure Key Vault
 # TenableIOSecretKey - Should come from the Azure Key Vault
 # TenableIOJFrog - Should come from the Azure Key Vault
-TenableIOAccessKey=$1
-TenableIOSecretKey=$2
-TenableIOJFrog=$3
+TIOACCESSKEY=$1
+TIOSECRETKEY=$2
+TIOJFROGPASS=$3
 
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
 echo "Tenable.io Access Key: $TenableIOAccessKey"
