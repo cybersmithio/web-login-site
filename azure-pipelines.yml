@@ -30,6 +30,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
+        repository: 'webloginsite'
         command: 'build'
         Dockerfile: '**/Dockerfile'
     - task: AzureKeyVault@1
