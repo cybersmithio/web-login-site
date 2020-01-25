@@ -16,11 +16,6 @@ echo ""
 echo "Variables list:"
 set
 
-#echo "Build image"
-#set -x
-#docker build ./ -t $IMAGEREPOSITORY:$BUILD_BUILDID
-#set +x
-
 echo "Download Tenable.io on-prem scanner"
 
 docker login --username pubread --password $TenableIOJFrog tenableio-docker-consec-local.jfrog.io
