@@ -34,7 +34,6 @@ stages:
         command: build
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
     - task: AzureKeyVault@1
