@@ -10,6 +10,8 @@ TIOJFROGPASS=$3
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
 echo "Tenable.io Access Key: $TIOACCESSKEY"
 echo ""
+
+#For debugging
 echo "Variables list:"
 set
 
@@ -18,8 +20,8 @@ echo "Download Tenable.io on-prem scanner"
 docker login --username pubread --password $TIOJFROGPASS tenableio-docker-consec-local.jfrog.io
 docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
-
-docker images
+#For debugging
+#docker images
 
 echo "Start of on-prem analysis"
 set -x
@@ -39,6 +41,8 @@ while [ 1 -eq 1 ]; do
   echo "Report status: $RESP"
   if [ "x$RESP" = "xpass" ] ; then
     echo "Container marked as PASSED by policy rules"
+    echo "Retagging for container registry"
+    docker tag $IMAGEREPOSITORY:$BUILD_BUILDID $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID
     exit 0
   fi
   if [ "x$RESP" = "xfail" ] ; then
