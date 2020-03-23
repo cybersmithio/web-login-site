@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    environment {
+        WAS_SCAN_UUID = '1234567-abcd-ef12-3456-89abcdef'
+        CHECK_INTERVAL = 60
+        CONTAINER_NAME = "web-login-site1"
+    }
+    stages {
+        stage('Preparation') {
+            steps {
+                git 'https://github.com/cybersmithio/web-login-site.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build ./ -t web-login-site:$BUILD_NUMBER'
+            }
+        }
+        stage('Results') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'PUT-UUID-HERE-OF-TENABLE-API-KEYS-STORED-IN-JENKINS', passwordVariable: 'TENABLE_IO_SECRET_KEY', usernameVariable: 'TENABLE_IO_ACCESS_KEY')]) {
+                    sh 'docker run -d --rm -p 8081:443 --name $CONTAINER_NAME web-login-site:$BUILD_NUMBER'
+                    sh '''SCAN_ID=`curl -s --request POST --url "https://cloud.tenable.com/was/v2/configs/$WAS_SCAN_UUID/scans" --header "accept: application/json" --header "content-type: application/json" --header "x-apikeys: accessKey=${TENABLE_IO_ACCESS_KEY};secretKey=${TENABLE_IO_SECRET_KEY}" | sed "s/.*\\\"\\([0-9a-f\\-]*\\)\\\".*/\\1/"`
+echo "Waiting for scan to start"
+STATUS=""
+while [ "x$STATUS" != "xcompleted" ]; do
+  sleep $CHECK_INTERVAL
+  STATUS=`curl -s --request GET --url "https://cloud.tenable.com/was/v2/scans/$SCAN_ID/" --header "accept: application/json" --header "content-type: application/json" --header "x-apikeys: accessKey=${TENABLE_IO_ACCESS_KEY};secretKey=${TENABLE_IO_SECRET_KEY}" | sed "s/.*\\\"status\\\":\\\"\\([^\\\"]*\\)\\\".*/\\1/" | tr '[:upper:]' '[:lower:]'`
+  echo "Current status of scan: $STATUS"
+  if [ "x$STATUS" = "xcanceled" -o "x$STATUS" = "xaborted" ]; then
+    docker stop -t 1 $CONTAINER_NAME
+    exit -1
+  fi
+done
+docker stop -t 1 $CONTAINER_NAME
+
+'''
+                }
+            }
+        }
+    }
+}
