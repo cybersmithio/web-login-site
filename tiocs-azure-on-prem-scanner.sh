@@ -7,6 +7,7 @@ TIOACCESSKEY=$1
 TIOSECRETKEY=$2
 TIOJFROGPASS=$3
 
+IMAGEREPOSITORY=$BUILD_REPOSITORY_ID
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
 echo "Tenable.io Access Key: $TIOACCESSKEY"
 echo ""
