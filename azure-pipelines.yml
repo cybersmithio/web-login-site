@@ -25,6 +25,7 @@ stages:
       inputs:
         command: build
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        repository: $(imageRepository)
         tags: |
           $(tag)
     - task: AzureKeyVault@1
