@@ -34,9 +34,9 @@ set -x
 
 docker images
 docker ps -a
-docker save $BUILD_REPOSITORY_ID:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$BUILD_REPOSITORY_ID -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 
-docker save $BUILD_DEFINITIONNAME:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$BUILD_DEFINITIONNAME -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+#docker save $BUILD_DEFINITIONNAME:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$BUILD_DEFINITIONNAME -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 
 
 if [ $? != 0 ]; then
