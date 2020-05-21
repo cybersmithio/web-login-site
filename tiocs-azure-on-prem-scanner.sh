@@ -7,8 +7,6 @@ TIOACCESSKEY=$1
 TIOSECRETKEY=$2
 TIOJFROGPASS=$3
 
-IMAGEREPOSITORY=$BUILD_REPOSITORY_ID
-IMAGEREPOSITORY=tenabledemoacr.azurecr.io/web-login-site
 echo "Checking $IMAGEREPOSITORY:$BUILD_BUILDID and analyzing results on-premise then reporting into cloud.tenable.com repo $IMAGEREPOSITORY"
 echo "Tenable.io Access Key: $TIOACCESSKEY"
 echo ""
@@ -29,10 +27,15 @@ echo "Start of on-prem analysis"
 set -x
 
 
+#IMAGEREPOSITORY=$BUILD_REPOSITORY_ID
+#IMAGEREPOSITORY=$BUILD_DEFINITIONNAME
+#IMAGEREPOSITORY=tenabledemoacr.azurecr.io/web-login-site
+#IMAGEREPOSITORY=tenabledemoacr.azurecr.io/web-login-site
 
 
-docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $BUILD_REPOSITORY_ID:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 
+docker save $BUILD_DEFINITIONNAME:$BUILD_BUILDID | docker run -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 
 
 if [ $? != 0 ]; then
