@@ -21,8 +21,8 @@ docker login --username pubread --password $TIOJFROGPASS tenableio-docker-consec
 docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
 #For debugging
-#docker images
+docker images
 
 echo "Start of on-prem analysis"
-docker save $IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e CHECK_POLICY=true -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
+docker save $CONTAINERREGISTRY/$IMAGEREPOSITORY:$BUILD_BUILDID | docker run -e CHECK_POLICY=true -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIOACCESSKEY -e TENABLE_SECRET_KEY=$TIOSECRETKEY -e IMPORT_REPO_NAME=$IMAGEREPOSITORY -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGEREPOSITORY:$BUILD_BUILDID
 
