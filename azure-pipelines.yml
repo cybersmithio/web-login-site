@@ -31,6 +31,7 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
+        containerRegistry: 'tenabledemoacr'
         command: build
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
@@ -47,3 +48,9 @@ stages:
       inputs:
        scriptPath: tiocs-azure-on-prem-scanner.sh
        args: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
+    - task: Docker@2
+      displayName: Push image to registry
+      inputs:
+        containerRegistry: 'tenabledemoacr'
+        repository: '$(imageRepository)'
+        command: 'push'
