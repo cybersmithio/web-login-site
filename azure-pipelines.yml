@@ -12,7 +12,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '876a97ad-7e72-4bcf-a5be-d9970d8b7599'
   imageRepository: 'webloginsite'
-  containerRegistry: 'tenabledemoacr.azurecr.io'
+  containerRegistry: 'CybersmithTenableDemoRegistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
   
@@ -31,7 +31,7 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        containerRegistry: 'tenabledemoacr'
+        containerRegistry: 'CybersmithTenableDemoRegistry'
         command: build
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
@@ -51,6 +51,6 @@ stages:
     - task: Docker@2
       displayName: Push image to registry
       inputs:
-        containerRegistry: 'tenabledemoacr'
+        containerRegistry: 'CybersmithTenableDemoRegistry'
         repository: '$(imageRepository)'
         command: 'push'
