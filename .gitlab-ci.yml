@@ -26,4 +26,4 @@ deploy_b:
   stage: deploy
   needs: [test_a, test_b]
   script:
-    - echo "Push to the registry."
+    - echo "Push to the registry"
