@@ -13,7 +13,7 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.TIO_ACCESS_KEY }}
+          password: ${{ secrets.TIO_SECRET_KEY }}
           repository: registry.cloud.tenable.com/web-login-site-via-gitactions/web-login-site
           tag_with_ref: true
