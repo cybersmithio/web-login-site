@@ -15,8 +15,8 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: registry.cloud.tenable.com
-          username: ${{ secrets.TIO_ACCESS_KEY }}}
-          password: ${{ secrets.TIO_SECRET_KEY }}
+          username: ${{ secrets.TIOACCESSKEY }}}
+          password: ${{ secrets.TIOSECRETKEY }}
       - name: Build and Push
         uses: docker/build-push-action@v2
         with:
