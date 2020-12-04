@@ -29,6 +29,6 @@ jobs:
         run: |
           docker save web-login-site:latest | docker run -e CHECK_POLICY=true \
           -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=${{ secrets.TIOACCESSKEY }} \
-          -e IMPORT_REPO_NAME=web-login-site-gitactions-csscanner
+          -e IMPORT_REPO_NAME=web-login-site-gitactions-csscanner \
           -e TENABLE_SECRET_KEY=${{ secrets.TIOSECRETKEY }} \
           -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image web-login-site:latest
