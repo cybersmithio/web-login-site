@@ -10,11 +10,22 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Build and Push
-        uses: docker/build-push-action@v1
+      - name: Build
+        run: |
+          docker build web-login-site:latest
+      - name: Login to JFrog for Tenable.io CS scanner
+        uses: docker/login-action@v1
         with:
-          username: ${{ secrets.TIOACCESSKEY }}
-          password: ${{ secrets.TIOSECRETKEY }}
-          registry: registry.cloud.tenable.com
-          repository: web-login-site-via-gitactions/web-login-site
-          tags: latest
+          registry: tenableio-docker-consec-local.jfrog.io
+          username: ${{ secrets.TENABLEJFROGUSER }}
+          password: ${{ secrets.TENABLEJFROGPASS }}
+      - name: Pull Tenable.io CS scanner
+        run: |
+          docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
+      - name: Pull Tenable.io CS scanner
+        run: |
+          docker save web-login-site:latest | docker run -e CHECK_POLICY=true \
+              –e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=${{ secrets.TIOACCESSKEY }} \
+              -e TENABLE_SECRET_KEY=${{ secrets.TIOSECRETKEY }} \
+              -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest \
+              inspect-image web-login-site-gitactions-csscanner/web-login-site:latest

@@ -1,0 +1,20 @@
+name: Super-Linter
+
+# Run this workflow every time a new commit pushed to your repository
+on: push
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Build and Push
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.TIOACCESSKEY }}
+          password: ${{ secrets.TIOSECRETKEY }}
+          registry: registry.cloud.tenable.com
+          repository: web-login-site-via-gitactions/web-login-site
+          tags: latest
