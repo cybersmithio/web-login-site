@@ -22,6 +22,9 @@ jobs:
       - name: Pull Tenable.io CS scanner
         run: |
           docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
+      - name: View Docker Image (for debugging)
+        run: |
+          docker images web-login-site:latest
       - name: Run image through Tenable.io CS scanner
         run: |
           docker save web-login-site:latest | docker run -e CHECK_POLICY=true –e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=${{ secrets.TIOACCESSKEY }} -e TENABLE_SECRET_KEY=${{ secrets.TIOSECRETKEY }} -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image web-login-site-gitactions-csscanner/web-login-site:latest
