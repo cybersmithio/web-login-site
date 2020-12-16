@@ -43,6 +43,10 @@ stages:
         dockerfile: $(dockerfilePath)
         tags: |
           $(tag)
+    - task: Bash@3
+      inputs:
+        filePath: 'tiocs-azure-on-prem-scanner.sh'
+        arguments: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
     - task: Docker@2
       displayName: Push an image to container registry
       inputs:
