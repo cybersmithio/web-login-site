@@ -28,6 +28,12 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
+    - task: AzureKeyVault@1
+      inputs:
+        azureSubscription: 'Tenable Pay-As-You-Go(a28dd071-9504-4d90-892a-81d55ad9ac11)'
+        KeyVaultName: 'JSmithTioCSDemoKeyVault'
+        SecretsFilter: '*'
+        RunAsPreJob: false
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
