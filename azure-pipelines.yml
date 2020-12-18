@@ -44,6 +44,7 @@ stages:
         tags: |
           $(tag)
     - task: Bash@3
+      displayName: Tenable Container Image Test
       inputs:
         filePath: 'tiocs-azure-on-prem-scanner.sh'
         arguments: '$(TIOACCESSKEY) $(TIOSECRETKEY) $(TIOJFROGPASS)'
