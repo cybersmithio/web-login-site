@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  secrets-manager:
-    DOCKER_USERNAME: arn:aws:secretsmanager:us-east-1:295866033648:secret:cybersmith_docker_credentials-BYGxUE:dockerusername
-    DOCKER_PASSWORD: arn:aws:secretsmanager:us-east-1:295866033648:secret:cybersmith_docker_credentials-BYGxUE:dockerpassword
 
 phases:
   pre_build:
