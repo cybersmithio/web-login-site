@@ -6,6 +6,8 @@ phases:
     commands:
       - echo Logging in to Docker hub or it will prevent us from pulling the build due to new terms of service. $DOCKER_USERNAME / $DOCKER_PASSWORD
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker login tenableio-docker-consec-local.jfrog.io -u $JFROG_USERNAME -p $JFROG_PASSWORD
+      - docker pull tenableio-docker-consec-local.jfrog.io/cs-scanner:latest
 
   build:
     commands:
