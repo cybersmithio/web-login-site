@@ -1,6 +1,5 @@
 version: 0.2
 
-
 phases:
   pre_build:
     commands:
@@ -15,4 +14,6 @@ phases:
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER .
       - docker images
-      - docker save $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER | docker run -e CHECK_POLICY=true -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$IMAGE_REPO_NAME-awscodebuild -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE_REPO_NAME-awscodebuild:$CODEBUILD_BUILD_NUMBER
+      - docker save $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER | docker run -e CHECK_POLICY=true -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TENABLE_IO_ACCESS_KEY \
+        -e TENABLE_SECRET_KEY=$TENABLE_IO_SECRET_KEY -e IMPORT_REPO_NAME=$IMAGE_REPO_NAME-awscodebuild \
+        -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE_REPO_NAME-awscodebuild:$CODEBUILD_BUILD_NUMBER
