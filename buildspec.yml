@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    IMAGE_REPO_NAME: "web-login-site"
-
 phases:
   build:
     commands:
