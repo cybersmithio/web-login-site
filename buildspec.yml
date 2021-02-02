@@ -4,7 +4,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - echo Logging in to Docker hub or it will prevent us from pulling the build due to new terms of service
+      - echo Logging in to Docker hub or it will prevent us from pulling the build due to new terms of service. $DOCKER_USERNAME / $DOCKER_PASSWORD
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
   build:
