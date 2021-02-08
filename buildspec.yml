@@ -14,3 +14,6 @@ phases:
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER .
       - docker images
       - docker save $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER | docker run -e CHECK_POLICY=true -e DEBUG_MODE=true -e TENABLE_ACCESS_KEY=$TIO_ACCESS_KEY -e TENABLE_SECRET_KEY=$TIO_SECRET_KEY -e IMPORT_REPO_NAME=$IMAGE_REPO_NAME-awscodebuild -i tenableio-docker-consec-local.jfrog.io/cs-scanner:latest inspect-image $IMAGE_REPO_NAME-awscodebuild:$CODEBUILD_BUILD_NUMBER
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER hub.docker.com/vuln-$IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER
+      - docker push hub.docker.com/vuln-$IMAGE_REPO_NAME:$CODEBUILD_BUILD_NUMBER
+
